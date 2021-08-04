@@ -1,0 +1,32 @@
+ <header>
+  <nav class="navbar navbar-expand-md" style="background-color: #00AA9E;">
+   <div>
+    <a href="https://www.javaguides.net" class="navbar-brand text-white"> Todo
+     App</a>
+   </div>
+
+   <ul class="navbar-nav">
+    <li><a href="<%=request.getContextPath()%>/getAllTodos"
+     class="nav-link text-white">Todos</a></li>
+   </ul>
+
+	<ul class="navbar-nav">
+    <li><a href="<%=request.getContextPath()%>/home"
+     class="nav-link text-white">home</a></li>
+   </ul>
+
+   <ul class="navbar-nav navbar-collapse justify-content-end text-white">
+    <li>
+    	<i class="fas fa-users"style='font-size:25px;color:black'></i><span style="font-size:25px;color:white">${user.username}</span>
+    </li>
+    <li>
+    <a href="<%=request.getContextPath()%>/logout">
+    		<i class='fas fa-arrow-circle-right' style='font-size:25;color:black'></i>
+    </a>
+    
+    </li>
+    
+     
+   </ul>
+  </nav>
+ </header>

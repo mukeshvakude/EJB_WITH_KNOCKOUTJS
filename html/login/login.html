@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>TODO APPLICATION</title>
+    <meta charset="utf-8" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous">
+   <!--  sweet alert js file-->
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="/js/common/jquery-3.6.0.js"></script>
+    <script src="/js/common/knockout-3.1.0.js"></script>
+
+    <style>
+        .validationMessage{
+           color: red;
+       } 
+   </style>
+</head>
+<body>
+
+    <header>
+       
+        <nav class="navbar navbar-expand-md" style="background-color: #00AA9E;">
+            
+         <div>
+          <a class="navbar-brand text-white"> Todo</a>
+         </div>
+       
+         <ul class="navbar-nav navbar-collapse justify-content-end">
+          <li><a href="../login/login.html" class="nav-link text-white" >Login</a></li>
+          <li><a href="../registration/registration.html" class="nav-link text-white">Signup</a></li>
+         </ul>
+        </nav>
+    </header>
+    <div class="d-flex align-items-center" style="height :70vh">
+        <div class="container align-items-center">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <div class="card">
+                        <div class="card-header  text-center text-black" style="background-color: #00AA9E;">
+                        
+                                <i class="fas fa-users text-white" style='font-size:30px'></i>
+                            <div class="text-white">
+                                login here 
+                            </div>
+                        </div>
+                      
+                        <div class="card-body">
+                        
+                            <form data-bind="submit: checkLoginUser , attr: { action: actionForm}">
+    
+                                <div class="form-group">
+                                    <label for="Email">Email</label>
+                                    <input type="email" id="Email"  class="form-control" data-bind="value: email" placeholder="Email" required/>
+                                </div> 
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" class="form-control" data-bind="value:password " placeholder="Enter password" required/>
+                                    
+                                </div>
+                                
+                             
+                                <div class="form-group text-center text-white">
+                                    <button type="submit" class="btn text-white" style=" background-color:#00AA9E">
+                                        login
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+        </div>
+<script src="/js/login/login.js"></script>
+<script>
+
+$(document).ready(function () {
+        // destroying session
+        sessionStorage.removeItem("currentUser");
+});
+</script>
+</body>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous">
+    <!--  sweet alert js file-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <!-- Keep Responsive Page Js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+    <script src="/js/common/jquery-3.6.0.js"></script>
+
+    <script src="/js/common/knockout-3.1.0.js"></script>
+
+</head>
+
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand-md " style="background-color: #00AA9E;">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-white" id="navbarNavAltMarkup">
+                <div>
+                    <a class="navbar-brand "> Todo</a>
+                </div>
+
+                <ul class="nav navbar-nav text-white">
+                    <li>
+                        <a class="nav-item nav-link " data-toggle="modal" data-target="#exampleModal">
+                            AddTask
+                        </a>
+                    </li>
+
+                    <li class="active">
+                        <a class="nav-item nav-link active" data-bind="click:allTaskId">AllTasks </a>
+                    </li>
+
+                    <li>
+                        <a class="nav-item nav-link" data-bind="click:completedTaskId">Completed</a>
+                    </li>
+
+                    <li>
+                        <a class="nav-item nav-link" data-bind="click:pendingTaskId">Pendings</a>
+                    </li>
+
+
+
+                </ul>
+
+                <ul class="navbar-nav navbar-collapse justify-content-end text-white">
+                    <li>
+                        <i class="fas fa-users" style='font-size:20px;'></i>&nbsp;<span
+                            data-bind="text:activeUser" style="font-size:15px"></span>&nbsp;&nbsp;
+                    </li>
+                    <li>
+                        <a href="../login/login.html">
+                            <i class='fas fa-sign-out-alt' style='font-size:20;color:white'></i>
+                        </a>
+
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </nav>
+
+    </header>
+    <div class="container-fluid" style="margin-top: 1%;">
+
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div style="float: right;">
+                    <strong> Search:</strong><input type='text' id='txt_searchall' placeholder='Enter search text'>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+
+                <br>
+                <div id="AllTasksTable">
+                    <table id="example" class="table table-hover">
+
+                        <thead>
+                            <tr>
+
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>createdOn</th>
+                                <th>dueDate</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead> <!-- END THEAD -->
+
+                        <tbody data-bind="foreach :  { data: userAllTasks } ">
+
+
+                            <tr>
+
+
+                                <td data-bind="text:taskName"></td>
+                                <td data-bind="text:taskDescription"></td>
+                                <td data-bind="text:taskCreationDate"></td>
+                                <td data-bind="text:complitionDate"></td>
+                                <td data-bind="text:priority"></td>
+                                <td data-bind="text: taskStatus ? 'completed' : 'pending'"></td>
+                                <td><button class="btn btn-success btn-sm rounded-0" data-toggle="modal"
+                                        data-target="#exampleModal" data-bind="click: $root.detailTask"><i
+                                            class="fas fa-edit"></i></button>
+                                    <input type="checkbox" data-bind="checked:taskStatus , click:$root.changeStatus">
+                                    <button class="btn btn-danger btn-sm rounded-0"
+                                        data-bind="click:$root.deleteTask"><i class="fas fa-trash"></i></button>
+                                </td>
+
+
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <!--All Task Table div complted-->
+
+                <div id="CompletedTasksTable" style="display: none;">
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>createdOn</th>
+                                <th>dueDate</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <!-- <th>Action</th> -->
+
+                            </tr>
+                        </thead> <!-- END THEAD -->
+
+                        <tbody data-bind="foreach :  { data: userAllTasks } ">
+
+                            <!-- ko if:taskStatus -->
+                            <tr>
+                                <td data-bind="text:taskName"></td>
+                                <td data-bind="text:taskDescription"></td>
+                                <td data-bind="text:taskCreationDate"></td>
+                                <td data-bind="text:complitionDate"></td>
+                                <td data-bind="text:priority"></td>
+                                <td data-bind="text: taskStatus ? 'completed' : 'pending'"></td>
+                                <!-- <td><button   class="btn btn-success btn-sm rounded-0" data-bind="click: $root.detailTask"><i class="fas fa-edit"></i></button>
+                                    <input type="checkbox" data-bind="checked:taskStatus , click:$root.changeStatus">
+                                    <button class="btn btn-danger btn-sm rounded-0" data-bind="click:$root.deleteTask"><i class="fas fa-trash"></i></button></td>  -->
+
+                            </tr>
+                            <!-- /ko -->
+                        </tbody>
+
+                    </table>
+                </div> <!-- Copmleted Task Table Div End-->
+
+                <div id="PendingTasksTable" style="display: none;">
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>createdOn</th>
+                                <th>dueDate</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <!-- <th>Action</th> -->
+
+                            </tr>
+                        </thead> <!-- END THEAD -->
+
+                        <tbody data-bind="foreach :  { data: userAllTasks } ">
+
+                            <!-- ko ifnot:taskStatus -->
+                            <tr>
+                                <td data-bind="text:taskName"></td>
+                                <td data-bind="text:taskDescription"></td>
+                                <td data-bind="text:taskCreationDate"></td>
+                                <td data-bind="text:complitionDate"></td>
+                                <td data-bind="text:priority"></td>
+                                <td data-bind="text: taskStatus ? 'completed' : 'pending'"></td>
+                                <!-- <td><button   class="btn btn-success btn-sm rounded-0" data-bind="click: $root.detailTask"><i class="fas fa-edit"></i></button>
+                                    <input type="checkbox" data-bind="checked:taskStatus , click:$root.changeStatus">
+                                    <button class="btn btn-danger btn-sm rounded-0" data-bind="click:$root.deleteTask"><i class="fas fa-trash"></i></button></td>  -->
+
+                            </tr>
+                            <!-- /ko -->
+                        </tbody>
+
+                    </table>
+                </div> <!-- Pendings Task Table Div End-->
+            </div>
+
+        </div> <!-- END ROW-->
+
+
+        <div class="row">
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h5 class="modal-title" id="exampleModalLabel" data-bind="text:modelTitle"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form data-bind="submit: addTask">
+                                <div class="form-group">
+                                    <label for="taskName"> Name</label>
+                                    <input type="text" id="taskName" class="form-control"
+                                        data-bind="value:taskName ,valueupdate :'keypress'" placeholder="Name"
+                                        required />
+
+                                </div><!-- END Task NAME -->
+
+                                <div class="form-group">
+                                    <label for="taskDescription"> Description</label>
+                                    <textarea type="text" id="taskDescription" class="form-control"
+                                        data-bind="value:taskDescription ,valueupdate :'keypress'"
+                                        placeholder="Description" required></textarea>
+
+                                </div><!-- END Task NAME -->
+
+
+                                <div class="form-group">
+                                    <label for="endDate">Due Date</label>
+                                    <input type="date" name="complitionDate" data-date-format="YYYY MM DD"
+                                        id="complitionDate" class="form-control"
+                                        data-bind="value: complitionDate ,valueupdate:'keypress'"
+                                        placeholder="Complition Date" required />
+                                </div><!-- END startDate -->
+
+                                <div class="form-group">
+                                    <label>Priority:</label>
+                                    <input type="radio" name="priority" data-bind="checked: priority" value="None">
+                                    <label>None</label>
+                                    <input type="radio" name="priority" data-bind="checked: priority" value="Low">
+                                    <label>Low</label>
+                                    <input type="radio" name="priority" data-bind="checked: priority" value="Medium">
+                                    <label>Medium</label>
+                                    <input type="radio" name="priority" data-bind="checked: priority" value="High">
+                                    <label>High</label>
+                                </div> <!-- end Priority-->
+                                <div class="text-center">
+
+
+                                    <button type="submit" class="btn btn-success" id="Save">
+                                        <span class="glyphicon  glyphicon glyphicon-floppy-disk"
+                                            aria-hidden="true"></span> Save
+                                    </button>
+                                    <button type="reset" class="btn btn-success" id="Clear">
+                                        <span class="glyphicon  glyphicon glyphicon-floppy-disk"
+                                            aria-hidden="true"></span> Reset
+                                    </button>
+
+                                    <button type="button" class="btn btn-success" data-bind="click:updateTask"
+                                        style="display:none;" id="Update">
+                                        <span class="glyphicon  glyphicon glyphicon-floppy-disk"
+                                            aria-hidden="true"></span> Update
+                                    </button>
+
+
+                                </div>
+
+                            </form> <!-- END FORM -->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- END CONTAINER-->
+
+
+    <script>
+        $(document).ready(function () {
+
+            let sessionAvailable = JSON.parse(sessionStorage.getItem("currentUser"))
+            if (sessionAvailable === null || sessionAvailable === undefined) {
+                window.location.href = "../login/login.html";
+               
+            } else {
+                var today = new Date().toISOString().split('T')[0];
+                document.getElementsByName("complitionDate")[0].setAttribute('min', today);
+                // Active navbar Links
+                $(".nav a").on("click", function () {
+                    $(".nav").find(".active").removeClass("active");
+                    $("ul.navbar-nav > li > a").css(
+                      "color", "");
+                    $(this).parent().addClass("active");
+                    $(this).css("color", "#C0C0C0");
+                });
+
+
+                $('#txt_searchall').keyup(function () {
+                    // Search Text
+                    var search = $(this).val();
+
+                    // Hide all table tbody rows
+                    $('table tbody tr').hide();
+
+                    // Count total search result
+                    var len = $('table tbody tr:not(.notfound) td:contains("' + search + '")').length;
+
+                    if (len > 0) {
+                        // Searching text in columns and show match row
+                        $('table tbody tr:not(.notfound) td:contains("' + search + '")').each(function () {
+                            $(this).closest('tr').show();
+                        });
+                    } else {
+                        $('.notfound').show();
+                    }
+
+                });
+            }
+
+        });
+    </script>
+    <script src="/js/dashboard/dashboard.js"></script>
+
+
+
+</body>
+
+
+
+</html>

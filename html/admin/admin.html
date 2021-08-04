@@ -1,0 +1,155 @@
+<head>
+
+    <script src="/js/common/jquery-3.6.0.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable({
+
+                "scrollY": "300px",
+                "scrollCollapase": true,
+
+            }).draw(false);;
+        });
+    </script>
+
+
+
+    <script src="/js/common/knockout-3.1.0.js"></script>
+</head>
+
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md" style="background-color: #00AA9E;">
+            <div>
+                <a class="navbar-brand text-white"> Todo</a>
+            </div>
+
+            <ul class="navbar-nav navbar-collapse justify-content-end">
+                <li><a href="../login/login.html" class="nav-link text-white">Logout</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" style="margin-top: 1%;">
+
+
+        <div class="card card-4">
+            <div class="card-header" style="background-color: #00AA9E;">
+                <div class="text-center text-white">
+                    <h2 class="title">Welcome To Admin Page</h2>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>FirstName</th>
+                                    <th>LastName</th>
+                                    <th>Username</th>
+                                    <th>RegistationDate</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead> <!-- END THEAD -->
+
+                            <tbody data-bind="foreach: allUsers">
+
+                                <!-- ko if: role != "admin" -->
+                                <tr>
+                                    <td> <span data-bind="text: firstName"></span></td>
+                                    <td> <span data-bind="text: lastName"></span></td>
+                                    <td> <span data-bind="text: email"></span></td>
+                                    <td> <span data-bind="text:registrationDate"></span></td>
+                                    <td> <span data-bind=" text: activationStatus ? 'Active' : 'Deactive'"></span></td>
+
+                                    <td> <input type="checkbox"
+                                            data-bind="checked:activationStatus , click:$root.activateUser">
+                                    </td>
+
+                                </tr>
+                                <!-- /ko -->
+                            </tbody> <!-- END TBODY -->
+
+                        </table> <!-- END TABLE -->
+                        <div id="pager">
+                            <ul id="pagination" class="pagination-sm"></ul>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div><!-- card body end-->
+        </div><!-- card end -->
+    </div>
+
+
+
+
+    <script>
+
+        let sessionAvailable = JSON.parse(sessionStorage.getItem("currentUser"))
+        if (sessionAvailable === null || sessionAvailable === undefined) {
+            window.location.href = "../login/login.html";
+        } else {
+            function ajaxFunction(uri, method, data) {
+
+                return $.ajax({
+
+                    type: method,
+                    url: uri,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: data ? JSON.stringify(data) : null
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    // alert('Error : ' + errorThrown);
+                    // console.log(textStatus);
+                    alert(jqXHR.responseText);
+                });
+            }
+
+            var ViewModel = function () {
+
+                var self = this;
+                self.allUsers = ko.observableArray([]);
+
+
+                function getUserList() {
+                    addUrl = "http://localhost:8080/RESTAPITODOAPPLICATION/rest/users";
+                    ajaxFunction(addUrl, 'GET').done(function (data) {
+                        self.allUsers(data);
+                    });
+                }
+                self.activateUser = function (userobj) {
+                    addUrl = "http://localhost:8080/RESTAPITODOAPPLICATION/rest/users";
+                    ajaxFunction(addUrl, 'PUT', userobj).done(function (data) {
+                        console.log(data);
+                        getUserList();
+                    });
+                }
+
+                getUserList();
+            }
+
+            ko.applyBindings(new ViewModel());
+        }
+
+    </script>
+</body>

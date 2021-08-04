@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>TODO Application</title>
+    <meta charset="utf-8" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--  sweet alert js file-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="/js/common/jquery-3.6.0.js"></script>
+
+    <script src="/js/common/knockout-3.1.0.js"></script>
+
+
+
+    <style>
+        .validationMessage {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md" style="background-color: #00AA9E;">
+            <div>
+                <a class="navbar-brand text-white"> Todo</a>
+            </div>
+
+            <ul class="navbar-nav navbar-collapse justify-content-end">
+                <li><a href="../login/login.html" class="nav-link text-white">Login</a></li>
+                <li><a href="../registration/registration.html" class="nav-link text-white">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container" style="margin-top: 20px;">
+
+
+        <div class="row">
+
+            <div class="col">
+
+                <!-- FORM -->
+                <div class="card card-4">
+                    <div class="card-header" style="background-color: #00AA9E;">
+                        <div class="text-center text-white">
+                            <h2 class="title">Registration Form</h2>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <form data-bind="submit: addNewUser" action="/html/login/login.html">
+
+
+                            <div class="row row-space">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="FirstName">First Name</label>
+                                        <input type="text" id="FirstName" class="form-control"
+                                            data-bind="value:FirstName,valueupdate :'keypress'"
+                                            placeholder="First Name" />
+
+                                    </div><!-- END FIRST NAME -->
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="LastName">Last Name</label>
+                                        <input type="text" id="LastName" class="form-control"
+                                            data-bind="value: LastName,valueupdate :'keypress'"
+                                            placeholder="Last Name" />
+                                    </div><!-- END LAST NAME -->
+                                </div>
+                            </div> <!-- row  end-->
+
+
+
+                            <div class="row row-space">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="Password">Password</label>
+                                        <input type="password" id="Password" class="form-control"
+                                            data-bind="value:Password,valueupdate :'keypress'" placeholder="Password" />
+
+                                    </div><!-- END PASSWORDS  -->
+                                </div> <!-- col  end-->
+
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="Email">Email</label>
+                                        <input type="email" id="Email" class="form-control"
+                                            data-bind="value: Email,valueupdate :'keypress'" placeholder="Email" />
+                                    </div> <!-- END EMAIL -->
+                                </div> <!-- col  end-->
+                            </div> <!-- row  end-->
+
+                            <div class="row row-space">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="Gender">Gender</label>
+                                        <select class="form-control"
+                                            data-bind="options: GenderList, value: Gender, optionsCaption: 'Select your Gender ...' "></select>
+                                    </div> <!-- END Gender -->
+                                </div> <!-- col  end-->
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="dateOfBirth">Date Of Birth</label>
+                                        <input name="dateOfBirth" type="date" data-date-format="YYYY MM DD"
+                                            id="dateOfBirth" class="form-control"
+                                            data-bind="value: dateOfBirth ,valueupdate:'keypress'"
+                                            placeholder="Date of Birth" />
+                                    </div><!-- END dateOfBirth -->
+                                </div> <!-- col  end-->
+                            </div> <!-- row  end-->
+
+                            <div class="text-center">
+
+                                <button type="submit" class="btn text-white" style="background-color: #00AA9E;">
+                                    Register
+                                </button>
+                            </div>
+
+
+                        </form> <!-- END FORM -->
+
+
+
+                    </div> <!-- END Card BODY-->
+
+                </div><!-- END Card-->
+
+            </div> <!-- END  col-md-4 -->
+
+        </div> <!-- END ROW-->
+
+
+    </div> <!-- END CONTAINER-->
+
+    <!-- JS -->
+    <script>
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementsByName("dateOfBirth")[0].setAttribute('max', today);
+    </script>
+
+    <script src="/js/common/knockout.validation.js"></script>
+    <script src="/js/registration/registration.js"></script>
+
+</body>
+
+</html>
