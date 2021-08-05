@@ -75,7 +75,7 @@
                             data-bind="text:activeUser" style="font-size:15px"></span>&nbsp;&nbsp;
                     </li>
                     <li>
-                        <a href="../login/login.html">
+                        <a onclick="return logout();">
                             <i class='fas fa-sign-out-alt' style='font-size:20;color:white'></i>
                         </a>
 
@@ -114,7 +114,9 @@
                                 <th>dueDate</th>
                                 <th>Priority</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                                <th>ChangeStatus</th>
 
                             </tr>
                         </thead> <!-- END THEAD -->
@@ -134,9 +136,13 @@
                                 <td><button class="btn btn-success btn-sm rounded-0" data-toggle="modal"
                                         data-target="#exampleModal" data-bind="click: $root.detailTask"><i
                                             class="fas fa-edit"></i></button>
-                                    <input type="checkbox" data-bind="checked:taskStatus , click:$root.changeStatus">
-                                    <button class="btn btn-danger btn-sm rounded-0"
+                                </td>
+                                
+                                <td>  <button class="btn btn-danger btn-sm rounded-0"
                                         data-bind="click:$root.deleteTask"><i class="fas fa-trash"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" data-bind="checked:taskStatus , click:$root.changeStatus">
                                 </td>
 
 
@@ -359,6 +365,12 @@
             }
 
         });
+        function logout() {
+                sessionStorage.removeItem("currentUser");
+                window.location.href = "../login/login.html"
+                return true;
+        }
+
     </script>
     <script src="/js/dashboard/dashboard.js"></script>
 

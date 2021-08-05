@@ -34,7 +34,7 @@
             </div>
 
             <ul class="navbar-nav navbar-collapse justify-content-end">
-                <li><a href="../login/login.html" class="nav-link text-white">Logout</a></li>
+                <li><a  onclick="return logout();" class="nav-link text-white">Logout</a></li>
 
             </ul>
         </nav>
@@ -104,6 +104,12 @@
 
     <script>
 
+
+        function logout() {
+                sessionStorage.removeItem("currentUser");
+                window.location.href = "../login/login.html"
+                return true;
+        }
         let sessionAvailable = JSON.parse(sessionStorage.getItem("currentUser"))
         if (sessionAvailable === null || sessionAvailable === undefined) {
             window.location.href = "../login/login.html";
